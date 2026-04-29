@@ -30,3 +30,37 @@ dtriang <- function(x, min, max, mode) {
 
   return(res)
 }
+
+
+#' @title Distribution function for the Triangular Distribution
+#' @description Cumulative distribution function (CDF).
+#' @param q Vector of quantiles.
+#' @param min Lower limit (a).
+#' @param max Upper limit (b).
+#' @param mode Mode (c).
+#' @return A numeric vector of cumulative probabilities.
+#' @export
+ptriang <- function(q, min, max, mode) {
+  if (any(min > max)) stop("min must be less than or equal to max")
+  if (any(mode < min | mode > max)) stop("mode must be within [min, max]")
+
+  n <- max(length(q), length(min), length(max), length(mode))
+  q <- rep_len(q, n)
+  min <- rep_len(min, n)
+  max <- rep_len(max, n)
+  mode <- rep_len(mode, n)
+
+  p <- numeric(n)
+
+  p[q <= min] <- 0
+
+  idx1 <- q > min & q <= mode
+  p[idx1] <- (q[idx1] - min[idx1])^2 / ((max[idx1] - min[idx1]) * (mode[idx1] - min[idx1]))
+
+  idx2 <- q > mode & q < max
+  p[idx2] <- 1 - (max[idx2] - q[idx2])^2 / ((max[idx2] - min[idx2]) * (max[idx2] - mode[idx2]))
+
+  p[q >= max] <- 1
+
+  return(p)
+}
