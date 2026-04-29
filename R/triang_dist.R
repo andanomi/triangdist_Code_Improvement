@@ -95,3 +95,23 @@ qtriang <- function(p, min, max, mode) {
 
   return(res)
 }
+
+#' @title Random generation for the Triangular Distribution
+#' @description Generates n random values from a triangular distribution using the inversion method.
+#' @param n Number of observations. If length(n) > 1, the length is taken to be the number required.
+#' @param min Lower limit of the distribution (a).
+#' @param max Upper limit of the distribution (b).
+#' @param mode Mode of the distribution (c).
+#' @return A numeric vector of random values.
+#' @export
+rtriang <- function(n, min, max, mode) {
+  # Si n es un vector, usamos su longitud como cantidad de valores a generar
+  if (length(n) > 1) n <- length(n)
+
+  # 1. Generar n valores aleatorios de una distribución uniforme estándar [cite: 45]
+  u <- runif(n)
+
+  # 2. Pasar estos valores a tu propia función qtriang (que es la inversa de la CDF) [cite: 46]
+  # Esto garantiza que el generador sea matemáticamente consistente
+  return(qtriang(p = u, min = min, max = max, mode = mode))
+}
