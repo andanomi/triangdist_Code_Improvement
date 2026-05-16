@@ -6,6 +6,9 @@
 #' @param max Upper limit of the distribution (b).
 #' @param mode Mode of the distribution (c).
 #' @return A numeric vector of densities.
+#' @examples
+#' # Calcular la densidad en x = 0.5 para un triángulo entre 0 y 1, con pico en 0.5
+#' dtriang(x = 0.5, a = 0, b = 1, c = 0.5)
 #' @export
 dtriang <- function(x, min, max, mode) {
   if (any(min > max)) stop("min must be less than or equal to max")
@@ -39,6 +42,9 @@ dtriang <- function(x, min, max, mode) {
 #' @param max Upper limit (b).
 #' @param mode Mode (c).
 #' @return A numeric vector of cumulative probabilities.
+#' @examples
+#' # Probabilidad acumulada hasta x = 0.5
+#' ptriang(q = 0.5, a = 0, b = 1, c = 0.5)
 #' @export
 ptriang <- function(q, min, max, mode) {
   if (any(min > max)) stop("min must be less than or equal to max")
@@ -73,6 +79,9 @@ ptriang <- function(q, min, max, mode) {
 #' @param max Upper limit (b).
 #' @param mode Mode (c).
 #' @return A numeric vector of quantiles.
+#' @examples
+#' # Encontrar el valor de x que acumula el 50% de la probabilidad (mediana)
+#' qtriang(p = 0.5, a = 0, b = 1, c = 0.5)
 #' @export
 qtriang <- function(p, min, max, mode) {
   if (any(p < 0 | p > 1)) stop("p must be between 0 and 1")
@@ -103,6 +112,9 @@ qtriang <- function(p, min, max, mode) {
 #' @param max Upper limit of the distribution (b).
 #' @param mode Mode of the distribution (c).
 #' @return A numeric vector of random values.
+#' @examples
+#' # Generar 10 valores aleatorios de esta distribución triangular
+#' rtriang(n = 10, a = 0, b = 1, c = 0.5)
 #' @export
 rtriang <- function(n, min, max, mode) {
   # Si n es un vector, usamos su longitud como cantidad de valores a generar
